@@ -4,12 +4,20 @@
     <title>Audio Recorder</title>
     <style>
         body { text-align: center; margin-top: 50px; font-family: Arial, sans-serif; }
+        nav { background: #333; padding: 10px; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; }
+        nav a:hover { text-decoration: underline; }
         button { font-size: 18px; padding: 10px 20px; margin: 10px; cursor: pointer; }
         input { padding: 8px; font-size: 16px; margin-top: 10px; }
         #timer { font-size: 18px; color: darkred; margin-top: 10px; }
     </style>
 </head>
 <body>
+    <nav>
+        <a href="/">🎤 Record Audio</a>
+        <a href="/youtube">🎵 YouTube to MP3</a>
+    </nav>
+
     <h1>🎤 Audio Recorder</h1>
     <button id="startBtn">Start Recording</button>
     <button id="stopBtn" disabled>Stop Recording</button>
