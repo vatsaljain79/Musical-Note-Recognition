@@ -42,7 +42,6 @@ def save_audio():
     audio_file = request.files["audio_data"]
     user_filename = request.form.get("filename", "").strip()
 
-    # Auto-generate name if not given
     if not user_filename:
         filename = get_next_filename()
     else:
@@ -50,15 +49,12 @@ def save_audio():
             user_filename += ".mp3"
         filename = make_unique_filename(user_filename)
 
-    # Save temp file
     temp_path = os.path.join(SAVE_DIR, "temp.webm")
     audio_file.save(temp_path)
 
-    # Convert to MP3
     sound = AudioSegment.from_file(temp_path, format="webm")
     sound.export(os.path.join(SAVE_DIR, filename), format="mp3")
-
-    # Remove temp file
+ 
     os.remove(temp_path)
 
     return f"Saved as {filename} - <a href='/download/{filename}' target='_blank'>Download</a>"
