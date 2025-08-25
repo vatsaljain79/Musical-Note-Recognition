@@ -27,7 +27,7 @@ def stft(signal, sr, fft_size=2048, hop_size=512, window=np.hanning):
 
 # ---------- STEP 2: CONSTELLATION MAP ----------
 def get_constellation_map(magnitude, freq_bins, time_bins,
-                          prominence_db=20, max_peaks=5):
+                          prominence_db=20, max_peaks=2):
     constellation = []
     mag_db = 20 * np.log10(magnitude + 1e-10)
 
@@ -61,7 +61,7 @@ def generate_hashes(constellation, fan_out=5):
                 dt = t2 - t1
                 if 0 < dt < 5.0:  # limit Δt window
                     hash_val = (int(f1), int(f2), round(dt, 2))
-                    hashes.append((hash_val, t1))
+                    hashes.append((hash_val, round(t1,2)))
     return hashes
 
 
@@ -169,8 +169,13 @@ if __name__ == "__main__":
 
     # Songs to index (replace with your mp3s)
     songs = {
-        "song1": "Tujhe_Dekha_Toh.mp3",
-        "song2": "Dheere_Dheere.mp3",
+        "song1": "music/Tujhe_Dekha_Toh.mp3",
+        "song2": "music/Dheere_Dheere.mp3",
+        "song3": "music/6_AM.mp3",
+        "song4": "music/Agar_Tum_Saath_Ho.mp3",
+        "song5": "music/Desi_Kalakaar.mp3",
+        "song6": "music/Ho_Gya_Hai_Tujhko.mp3",
+        # "song7": "recordings/trim_dheere.mp3"
     }
 
     # Index songs
@@ -185,12 +190,13 @@ if __name__ == "__main__":
         print(f"Indexed {song_id} with {len(hashes)} hashes")
 
     # Query (snippet of song1)
-    query_sig, sr = librosa.load("recording1.mp3", sr=None, mono=True)
+    query_sig, sr = librosa.load("recordings/trim_dheere.mp3", sr=None, mono=True)
     query_sig /= np.max(np.abs(query_sig))
 
     mag, freqs, times = stft(query_sig, sr)
     const_map = get_constellation_map(mag, freqs, times)
     query_hashes = generate_hashes(const_map)
+    print(f"Indexed query song with {len(query_hashes)} hashes")
 
     result = identify_song(db, query_hashes)
     if result:

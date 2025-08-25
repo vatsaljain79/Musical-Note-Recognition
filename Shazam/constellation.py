@@ -24,7 +24,7 @@ def stft(signal, sr, fft_size=2048, hop_size=512, window=np.hanning):
     return magnitude, freq_bins, time_bins
 
 
-def get_constellation_map(magnitude, freq_bins, time_bins, prominence_db=20, max_peaks=5):
+def get_constellation_map(magnitude, freq_bins, time_bins, prominence_db=20, max_peaks=2):
     """
     Extract multiple prominent peaks per frame (constellation map).
     """
@@ -49,7 +49,7 @@ def get_constellation_map(magnitude, freq_bins, time_bins, prominence_db=20, max
 
 # ---- Example usage ----
 if __name__ == "__main__":
-    mp3_path = "recording1.mp3"  # replace with your file
+    mp3_path = "recordings/c2.mp3"  # replace with your file
     signal, sr = librosa.load(mp3_path, sr=None, mono=True)
 
     # Normalize
